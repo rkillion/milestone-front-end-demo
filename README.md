@@ -1,3 +1,11 @@
+# Milestone Front End Demo
+
+To start the app, run `npm i && npm start` in the project directory.
+
+## Extra Node Packages Used
+styled-components (Styled Components)
+@mui/material @emotion/react @emotion/styled (Material UI)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

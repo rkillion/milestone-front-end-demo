@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import styled from "styled-components";
+import Banner from "./components/banner/Banner";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
+  const [user,setUser] = useState({
+    id: 1,
+    name: "Ann Hand",
+    institution: {
+      id: 1,
+      name: "Jefferson High School"
+    },
+    notifications: 7
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{width: "100%",height: "100%"}}>
+    <AppDiv>
+      <Banner user={user}/>
+      <Sidebar />
+    </AppDiv>
     </div>
   );
 }
+
+const AppDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  display: grid;
+  grid-template-columns: [start sidebar-start] 130px [sidebar-end content-start] auto [content-end end];
+  grid-template-rows: [top banner-start] 130px [banner-end content-top] auto [content-bottom bottom];
+  grid-template-areas: 
+    "sidebar banner" 
+    "sidebar content"
+`
 
 export default App;
