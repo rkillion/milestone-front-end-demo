@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { themeColors } from "../../styleExports";
 import MainInnovareIconArea from "./MainInnovareIconArea";
 import Navlink from "./Navlink";
 
@@ -16,7 +17,7 @@ export default function Sidebar() {
 const SidebarDiv = styled.div`
     grid-area: sidebar;
     height: 100%;
-    background: #005684;
+    background: ${themeColors.secondaryDarkCerulean};
     display: flex;
     flex-flow: column nowrap;
 `

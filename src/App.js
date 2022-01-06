@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Banner from "./components/banner/Banner";
+import Dashboard from "./components/dashboard/Dashboard";
 import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
@@ -15,12 +16,11 @@ function App() {
   })
 
   return (
-    <div style={{width: "100%",height: "100%"}}>
     <AppDiv>
       <Banner user={user}/>
       <Sidebar />
+      <Dashboard />
     </AppDiv>
-    </div>
   );
 }
 
@@ -30,7 +30,7 @@ const AppDiv = styled.div`
   background: #FFFFFF;
   display: grid;
   grid-template-columns: [start sidebar-start] 130px [sidebar-end content-start] auto [content-end end];
-  grid-template-rows: [top banner-start] 130px [banner-end content-top] auto [content-bottom bottom];
+  grid-template-rows: [top banner-start] 100px [banner-end content-top] auto [content-bottom bottom];
   grid-template-areas: 
     "sidebar banner" 
     "sidebar content"

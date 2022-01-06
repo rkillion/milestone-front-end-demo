@@ -3,8 +3,9 @@
 To start the app, run `npm i && npm start` in the project directory.
 
 ## Extra Node Packages Used
-styled-components (Styled Components)
-@mui/material @emotion/react @emotion/styled (Material UI)
+(Styled Components) styled-components
+(Material UI) @mui/material @emotion/react @emotion/styled @mui/icons-material
+(Carousel) pure-react-carousel react-multi-carousel
 
 # Getting Started with Create React App
 
