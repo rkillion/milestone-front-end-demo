@@ -17,7 +17,8 @@ const NavButton = styled.button`
     background: ${themeColors.secondaryDarkCerulean};
     border: 0px;
     &:hover {
-        background: ${themeColors.primaryLuckyPoint}
+        background: ${themeColors.primaryLuckyPoint};
+        transition: .5s
     };
     color: #FFFFFF;
     cursor: pointer

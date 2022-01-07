@@ -55,6 +55,6 @@ const UserLinksArea = styled.div`
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       color: "#FFFFFF",
-      backgroundColor: "#005684"
+      backgroundColor: themeColors.secondaryDarkCerulean
     },
   }));
