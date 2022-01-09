@@ -52,12 +52,6 @@ export default function MilestoneCarousel({ milestones }) {
                         </Slide>
                     )
                 })}
-                {/* <Slide index={0} width="25"><Typography>I am the first Slide</Typography>.</Slide>
-                <Slide index={1} width="25">I am the second Slide.</Slide>
-                <Slide index={2} width="25">I am the third Slide.</Slide>
-                <Slide index={3} width="25">I am the fourth Slide.</Slide>
-                <Slide index={4} width="25">I am the fifth Slide.</Slide>
-                <Slide index={5} width="25">I am the sixth Slide.</Slide> */}
             </Slider>
             <div style={{
                 position: "relative",

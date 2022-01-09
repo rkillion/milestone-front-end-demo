@@ -2,8 +2,20 @@ import styled from "styled-components";
 import { FlexRow, InternalLink, PageSection, ParagraphMedium, SubheadingMedium, tableStyles, themeColors, Typography } from "../../styleExports";
 import MilestoneCarousel from "./MilestoneCarousel";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import NewMilestoneDialogue from "../form-dialogues/NewMilestoneDialogue";
+import { useState } from "react";
 
 export default function Dashboard({ milestones }) {
+    const [newMilestoneDialogueOpen, setNewMilestoneDialogueOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setNewMilestoneDialogueOpen(true);
+    };
+
+    const handleClose = () => {
+        setNewMilestoneDialogueOpen(false);
+    };
+
     return (
         <DashboardPage>
             <PageSection
@@ -17,11 +29,15 @@ export default function Dashboard({ milestones }) {
                     <SubheadingMedium>Milestones</SubheadingMedium>
                     <ParagraphMedium><InternalLink>View All</InternalLink></ParagraphMedium>
                 </MilestonesCarouselLabel>
-                {milestones.length<=0 ? <MilestonesCarouselLabel style={{flexGrow: 2,borderRight: "0px"}}><Typography>You Currently have no milestones.</Typography></MilestonesCarouselLabel> : <MilestoneCarousel milestones={milestones}/>}
+                {milestones.length<=0 ? <MilestonesCarouselLabel style={{
+                    flexGrow: 2
+                    }}>
+                    <Typography>You currently have no milestones.</Typography>
+                    </MilestonesCarouselLabel> : <MilestoneCarousel milestones={milestones}/>}
                 <FlexRow style={{
                     alignItems: "center"
                 }}>
-                    <AddCircleIcon fontSize="large" sx={{
+                    <AddCircleIcon onClick={handleClickOpen} fontSize="large" sx={{
                         marginLeft: "20px",
                         padding: 0,
                         color: themeColors.primaryDarkCyan,
@@ -35,6 +51,7 @@ export default function Dashboard({ milestones }) {
                     }}/>
                 </FlexRow>
             </PageSection>
+            <NewMilestoneDialogue open={newMilestoneDialogueOpen} handleClose={handleClose}/>
         </DashboardPage>
     )
 }

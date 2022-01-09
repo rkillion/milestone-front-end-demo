@@ -7,7 +7,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 export default function Banner({ user }) {
     return (
         <BannerDiv>
-            <HFourBold>{user.institution.name}</HFourBold>
+            <HFourBold>{user.institution}</HFourBold>
             <UserLinksArea>
                 <StyledBadge 
                     badgeContent={user.notifications} 

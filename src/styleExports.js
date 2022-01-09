@@ -94,6 +94,28 @@ export const FlexColumn = styled.div`
 //tables
 export const tableStyles = {border: `1px solid ${themeColors.gridBorder}`}
 
+//inputs
+
+export const InputLabel = styled.label`
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 120%;
+    color: ${themeColors.secondaryDarkCerulean}
+`
+
+export const InputField = styled.input`
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 120%;
+    border: ${tableStyles.border};
+    border-radius: 4px;
+    color: ${themeColors.primaryAccessibleBlack}
+`
+
 //dates
 
 export function CalendarDateDisplay({ date }) {
