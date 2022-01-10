@@ -31,7 +31,7 @@ export default function MilestoneCarousel({ milestones }) {
                             index={arrayIndex}
                             style={{
                                 display: "flex",
-                                alignItems: "center"
+                                alignItems: "center",
                             }}
                         >
                             <FlexRow style={{

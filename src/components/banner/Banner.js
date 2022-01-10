@@ -3,11 +3,13 @@ import { HFourBold, themeColors, Typography } from "../../styleExports";
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { useNavigate } from "react-router";
 
 export default function Banner({ user }) {
+    const navigate = useNavigate();
     return (
         <BannerDiv>
-            <HFourBold>{user.institution}</HFourBold>
+            <HFourBold onClick={()=>navigate("/")} style={{cursor: "pointer"}}>{user.institution}</HFourBold>
             <UserLinksArea>
                 <StyledBadge 
                     badgeContent={user.notifications} 

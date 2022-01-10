@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { themeColors, Typography } from "../../styleExports";
+import { useNavigate } from 'react-router';
 
-export default function Navlink() {
+export default function Navlink({title,destination}) {
+    const navigate = useNavigate();
+
     return (
-        <NavButton>
-            <Typography>Dashboard</Typography>
+        <NavButton onClick={()=>navigate(destination)} style={{
+            color: `${window.location.pathname===destination ? themeColors.primaryDarkCyan : "#FFFFFF"}`
+        }}>
+            <Typography>{title}</Typography>
         </NavButton>
     )
 }

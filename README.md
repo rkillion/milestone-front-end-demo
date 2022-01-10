@@ -6,6 +6,7 @@ To start the app, run `npm i && npm start` in the project directory.
 (Styled Components) styled-components
 (Material UI) @mui/material @emotion/react @emotion/styled @mui/icons-material
 (Carousel) pure-react-carousel react-multi-carousel
+(React Router DOM) react-router-dom
 
 <!-- # Getting Started with Create React App
 

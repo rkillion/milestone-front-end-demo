@@ -1,14 +1,17 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { themeColors } from "../../styleExports";
 import MainInnovareIconArea from "./MainInnovareIconArea";
 import Navlink from "./Navlink";
 
 export default function Sidebar() {
+
     return (
         <SidebarDiv>
             <MainInnovareIconArea />
             <NavLinksArea>
-                <Navlink />
+                <Navlink title="Dashboard" destination="/"/>
+                <Navlink title="Milestones" destination="/milestones"/>
             </NavLinksArea>
         </SidebarDiv>
     )

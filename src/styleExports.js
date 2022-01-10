@@ -77,6 +77,10 @@ export const InternalLink = styled.span`
 `
 
 //sections
+
+export const ContentPage = styled.div`
+`
+
 export const PageSection = styled.div`
     margin: 20px;
 `
@@ -117,6 +121,9 @@ export const InputField = styled.input`
 `
 
 //dates
+export function dateLongFormat(date) {
+    return `${longMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+}
 
 export function CalendarDateDisplay({ date }) {
     return (
@@ -148,4 +155,6 @@ export function CalendarDateDisplay({ date }) {
         </FlexColumn>
     )
 }
+
 export const shortMonths = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+export const longMonths = ["January","February","March","April","May","June","July","August","September","October","November","December"];

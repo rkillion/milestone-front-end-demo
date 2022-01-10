@@ -8,18 +8,25 @@ import { useState } from 'react';
 import { APIaddress } from '../../apiAddress';
 import { FlexRow, HFiveMedium, InputField, InputLabel, ParagraphMedium, themeColors, Typography } from "../../styleExports"
 
-export default function NewMilestoneDialogue({ open, handleClose, user, setMilestones, milestones }) {
-    const [newMilestone,setNewMilestone] = useState({
-        title: "",
-        date: "",
-        action_required: false,
-        user_id: user.id
-    })
+export default function EditMilestoneDialogue({ open, milestone, handleClose, setMilestones, milestones }) {
+    const initializeMilestone = () => {
+        let thisMilestone = Object.assign({},milestone);
+        let adjMonth = milestone.date.getMonth()+1
+        thisMilestone.date = `${milestone.date.getFullYear()}-${adjMonth.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+          })}-${milestone.date.getDate().toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+          })}`
+        return thisMilestone;
+    }
+    const [milestoneUpdates,setMilestoneUpdates] = useState(initializeMilestone())
     const [errors,setErrors] = useState({
         titleBlank: "",
         dateBlank: ""
     });
-    const [submitDisabled,setSubmitDisabled] = useState(false);
+    const [updateDisabled,setUpdateDisabled] = useState(false);
 
     function validate(currentErrors,field,value) {
         let updatedErrors = Object.assign({},currentErrors);
@@ -36,7 +43,7 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
     }
 
     function handleChange(e) {
-        let changedMilestone = Object.assign({},newMilestone);
+        let changedMilestone = Object.assign({},milestoneUpdates);
         changedMilestone[e.target.name] = e.target.name==="action_required" ? e.target.checked : e.target.value;
         let updatedErrors = validate(errors,e.target.name,e.target.value);
         let hasErrors = false;
@@ -46,15 +53,15 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
                 break;
             }
         }
-        setSubmitDisabled(hasErrors ? true : false);
+        setUpdateDisabled(hasErrors ? true : false);
         setErrors(updatedErrors);
-        setNewMilestone(changedMilestone);
+        setMilestoneUpdates(changedMilestone);
     }
 
     async function handleSubmit() {
         let updatedErrors = Object.assign({},errors);
-        for (const field in newMilestone) {
-            updatedErrors = validate(updatedErrors,field,newMilestone[field])
+        for (const field in milestoneUpdates) {
+            updatedErrors = validate(updatedErrors,field,milestoneUpdates[field])
         }
         let hasErrors = false;
         for (const key in updatedErrors) {
@@ -63,25 +70,25 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
                 break;
             }
         }
-        setSubmitDisabled(hasErrors ? true : false);
+        setUpdateDisabled(hasErrors ? true : false);
         setErrors(updatedErrors);
         if (!hasErrors) {
-            let milestoneSubmission = Object.assign({},newMilestone);
-            let dateArray = newMilestone.date.split("-");
+            let milestoneSubmission = Object.assign({},milestoneUpdates);
+            let dateArray = milestoneUpdates.date.split("-");
             milestoneSubmission.date = new Date(dateArray[0],dateArray[1]-1,dateArray[2]);
-            fetch(`${APIaddress}/milestones`,{
-                method: 'POST',
+            fetch(`${APIaddress}/milestones/${milestone.id}`,{
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(milestoneSubmission)
             }).then(r=>r.json()).then(data=>{
-                let newMilestoneArray = JSON.parse(JSON.stringify(milestones));
+                let newMilestoneArray = JSON.parse(JSON.stringify(milestones.filter(element=>element.id!==milestone.id)));
                 newMilestoneArray.push(data);
-                setMilestones(newMilestoneArray.map(milestone=>{
+                setMilestones(newMilestoneArray.map(m=>{
                     //this converts the UTCstring for date into a js date object
-                    let updatedMilestone = Object.assign({},milestone);
-                    updatedMilestone.date = new Date(milestone.date);
+                    let updatedMilestone = Object.assign({},m);
+                    updatedMilestone.date = new Date(m.date);
                     return updatedMilestone
                   }).sort((a,b)=>a.date-b.date))
                 handleClose();
@@ -94,7 +101,7 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
             <DialogTitle style={{
                 minWidth: "450px"
             }}>
-                <HFiveMedium style={{color: themeColors.primaryDarkCyan}}>New Milestone</HFiveMedium>
+                <HFiveMedium style={{color: themeColors.primaryDarkCyan}}>{milestoneUpdates.title}</HFiveMedium>
             </DialogTitle>
             <DialogContent>
               <DialogContentText sx={{
@@ -117,7 +124,7 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
                 <InputField 
                     type="text" 
                     name="title"
-                    value={newMilestone.title}
+                    value={milestoneUpdates.title}
                     onChange={handleChange}
                     style={{
                         width: "88%"
@@ -140,7 +147,7 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
                     <InputField 
                         type="date"
                         name="date"
-                        value={newMilestone.date}
+                        value={milestoneUpdates.date}
                         onChange={handleChange}
                     ></InputField>
                     <div>
@@ -148,7 +155,7 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
                         <InputField 
                             type="checkbox"
                             name="action_required"
-                            checked={newMilestone.action_required}
+                            checked={milestoneUpdates.action_required}
                             onChange={handleChange}
                         ></InputField>
                     </div>
@@ -159,10 +166,10 @@ export default function NewMilestoneDialogue({ open, handleClose, user, setMiles
               <Button onClick={handleClose} style={{
                   color: themeColors.primaryDarkCyan
               }}><Typography>Cancel</Typography></Button>
-              <Button disabled={submitDisabled} onClick={handleSubmit} style={{
+              <Button disabled={updateDisabled} onClick={handleSubmit} style={{
                   color: themeColors.primaryDarkCyan,
-                  opacity: submitDisabled ? "30%" : "100%"
-              }}><Typography>Submit</Typography></Button>
+                  opacity: updateDisabled ? "30%" : "100%"
+              }}><Typography>Update</Typography></Button>
             </DialogActions>
           </Dialog>
       );

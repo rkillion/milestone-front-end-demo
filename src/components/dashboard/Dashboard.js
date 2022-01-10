@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { FlexRow, InternalLink, PageSection, ParagraphMedium, SubheadingMedium, tableStyles, themeColors, Typography } from "../../styleExports";
+import { ContentPage, FlexRow, InternalLink, PageSection, ParagraphMedium, SubheadingMedium, tableStyles, themeColors, Typography } from "../../styleExports";
 import MilestoneCarousel from "./MilestoneCarousel";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import NewMilestoneDialogue from "../form-dialogues/NewMilestoneDialogue";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
-export default function Dashboard({ milestones }) {
+export default function Dashboard({ milestones, user, setMilestones }) {
     const [newMilestoneDialogueOpen, setNewMilestoneDialogueOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleClickOpen = () => {
         setNewMilestoneDialogueOpen(true);
@@ -17,7 +19,7 @@ export default function Dashboard({ milestones }) {
     };
 
     return (
-        <DashboardPage>
+        <ContentPage>
             <PageSection
                 style={{
                     display: "flex",
@@ -27,10 +29,12 @@ export default function Dashboard({ milestones }) {
             >
                 <MilestonesCarouselLabel>
                     <SubheadingMedium>Milestones</SubheadingMedium>
-                    <ParagraphMedium><InternalLink>View All</InternalLink></ParagraphMedium>
+                    <ParagraphMedium>
+                        <InternalLink onClick={()=>navigate("/milestones")}>View All</InternalLink>
+                    </ParagraphMedium>
                 </MilestonesCarouselLabel>
                 {milestones.length<=0 ? <MilestonesCarouselLabel style={{
-                    flexGrow: 2
+                    // flexGrow: 2
                     }}>
                     <Typography>You currently have no milestones.</Typography>
                     </MilestonesCarouselLabel> : <MilestoneCarousel milestones={milestones}/>}
@@ -44,21 +48,16 @@ export default function Dashboard({ milestones }) {
                         cursor: "pointer",
                         borderRadius: "25px",
                         '&:hover': {
-                            // boxShadow: "2px 2px 5px black",
                             color: themeColors.secondaryDarkCerulean,
                             transition: ".5s"
                         }
                     }}/>
                 </FlexRow>
             </PageSection>
-            <NewMilestoneDialogue open={newMilestoneDialogueOpen} handleClose={handleClose}/>
-        </DashboardPage>
+            <NewMilestoneDialogue open={newMilestoneDialogueOpen} handleClose={handleClose} user={user} setMilestones={setMilestones} milestones={milestones}/>
+        </ContentPage>
     )
 }
-
-const DashboardPage = styled.div`
-    
-`
 
 const MilestonesCarouselLabel = styled.div`
     padding: 20px;
