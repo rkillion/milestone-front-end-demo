@@ -9,7 +9,9 @@ export default function Banner({ user }) {
     const navigate = useNavigate();
     return (
         <BannerDiv>
-            <HFourBold onClick={()=>navigate("/")} style={{cursor: "pointer"}}>{user.institution}</HFourBold>
+            <HFourBold 
+                onClick={()=>navigate("/")} 
+                style={{cursor: "pointer"}}>{user.institution}</HFourBold>
             <UserLinksArea>
                 <StyledBadge 
                     badgeContent={user.notifications} 

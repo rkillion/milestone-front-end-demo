@@ -9,19 +9,39 @@ import MilestonesPage from "./components/milestones/MilestonesPage";
 
 function App() {
   const [user,setUser] = useState({})
+  const [allUsers,setAllUsers] = useState([])
+  const [assignments,setAssignments] = useState([])
   const [milestones,setMilestones] = useState([])
 
   useEffect(()=>{
-    fetch(`${APIaddress}/users/1`).then(r=>r.json()).then(data=>{
+    let userIDToFetch = 1;
+    fetch(`${APIaddress}/users/${userIDToFetch}`).then(r=>r.json()).then(data=>{
       let userDataOnly = Object.assign({},data)
-      delete userDataOnly.milestones;
+      delete userDataOnly.created_milestones;
+      delete userDataOnly.assigned_milestones;
       setUser(userDataOnly);
-      setMilestones(data.milestones.map(milestone=>{
+      let milestoneIndeces = data.created_milestones.map(m=>m.id);
+      let allMilestones = [...data.created_milestones,...data.assigned_milestones.filter(m=>milestoneIndeces.indexOf(m.id)===-1)];
+      setMilestones(allMilestones.map(milestone=>{
         //this converts the UTCstring for date into a js date object
         let updatedMilestone = Object.assign({},milestone);
         updatedMilestone.date = new Date(milestone.date);
+        //this sets action_required to true if the date is today or earlier
+        let today = new Date();
+        updatedMilestone.action_required = today>=updatedMilestone.date ? true : updatedMilestone.action_required;
         return updatedMilestone
       }).sort((a,b)=>a.date-b.date));
+      fetch(`${APIaddress}/users`).then(r=>r.json()).then(data=>{
+        let allUsersDataOnly = data.map(user=>{
+          let userDataOnly = Object.assign({},user)
+          delete userDataOnly.created_milestones;
+          delete userDataOnly.assigned_milestones;
+          return userDataOnly;
+        })
+        let institution = allUsersDataOnly.find(user=>user.id===userIDToFetch).institution;
+        setAllUsers(allUsersDataOnly.filter(user=>user.institution===institution));
+        fetch(`${APIaddress}/assignments`).then(r=>r.json()).then(data=>setAssignments(data))
+      })
     })
   },[])
 
@@ -29,15 +49,13 @@ function App() {
     return null
   }
 
-  console.log(user);
-
   return (
     <AppDiv>
       <Banner user={user}/>
       <Sidebar />
       <Routes>
-        <Route exact path="/milestones" element={<MilestonesPage milestones={milestones} user={user} setMilestones={setMilestones}/>}/>
         <Route exact path="/" element={<Dashboard milestones={milestones} user={user} setMilestones={setMilestones}/>}/>
+        <Route exact path="/milestones" element={<MilestonesPage assignments={assignments} milestones={milestones} user={user} allUsers={allUsers} setMilestones={setMilestones}/>}/>
       </Routes>
     </AppDiv>
   );

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { themeColors } from "../../styleExports";
 import MainInnovareIconArea from "./MainInnovareIconArea";
