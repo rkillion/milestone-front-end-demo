@@ -22,6 +22,9 @@ export default function Dashboard({ milestones, user, setMilestones }) {
         <ContentPage>
             <PageSection
                 style={{
+                    height: "120px",
+                    minWidth: "490px",
+                    maxWidth: "1020px",
                     display: "flex",
                     flexFlow: "row nowrap",
                     justifyContent: "flex-start",
@@ -70,4 +73,13 @@ const MilestonesCarouselLabel = styled.div`
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+`
+//this below is an example of @media for my reference
+const TestChangingStyleMedia = styled.div`
+    width: 100px;
+    height: 100px;
+    background: red;
+    @media (max-width: 700px) {
+        background: blue
+      }
 `
