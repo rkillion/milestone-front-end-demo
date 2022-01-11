@@ -1,15 +1,25 @@
-import { CalendarDateDisplay, FlexRow, tableStyles, SubheadingMedium, ParagraphMedium, FlexColumn, themeColors, dateLongFormat } from "../../styleExports";
+import { CalendarDateDisplay, FlexRow, tableStyles, SubheadingMedium, ParagraphMedium, FlexColumn, themeColors, dateLongFormat, CaptionMedium, CaptionLink } from "../../styleExports";
 import ErrorIcon from '@mui/icons-material/Error';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditMilestoneDialogue from "../form-dialogues/EditMilestoneDialogue";
 import { useState } from "react";
 import DeleteMilestoneDialogue from "../form-dialogues/DeleteMilestoneDialogue";
+import AssignMilestoneDialogue from "../form-dialogues/AssignMilestoneDialogue";
 
 
-export function MilestoneCard({ milestone, user, milestones, setMilestones }) {
+export function MilestoneCard({ assignments, milestone, allUsers, user, milestones, setMilestones }) {
+    const [openAssignDialogue,setOpenAssignDialogue] = useState(false);
     const [openEditDialogue,setOpenEditDialogue] = useState(false);
     const [openDeleteDialogue,setOpenDeleteDialogue] = useState(false);
+
+    const handleAssignOpen = () => {
+        setOpenAssignDialogue(true);
+      };
+    
+    const handleAssignClose = () => {
+        setOpenAssignDialogue(false);
+    };
 
     const handleEditOpen = () => {
         setOpenEditDialogue(true);
@@ -26,14 +36,14 @@ export function MilestoneCard({ milestone, user, milestones, setMilestones }) {
     const handleDeleteClose = () => {
         setOpenDeleteDialogue(false);
     };
-
+    
     return (
         <div style={{
             width: "95%",
             margin: "10px 0px 10px 0px",
             padding: "10px",
             display: "grid",
-            gridTemplateColumns: "[calGraphic] 60px [title] 250px [notifications] auto [buttons] 100px",
+            gridTemplateColumns: "[calGraphic] 60px [title] 250px [assignment] auto [notifications] auto [buttons] 100px",
             border: tableStyles.border,
             borderRadius: "4px"
         }}>
@@ -45,6 +55,13 @@ export function MilestoneCard({ milestone, user, milestones, setMilestones }) {
             }}>
                 <SubheadingMedium>{milestone.title}</SubheadingMedium>
                 <ParagraphMedium style={{color: themeColors.secondaryGrey}}>{dateLongFormat(milestone.date)}</ParagraphMedium>
+            </FlexColumn>
+            <FlexColumn style={{
+                gridColumn: "assignment",
+                justifyContent: "center"
+                }}>
+                <CaptionMedium>{milestone.assignees[0]&&milestone.assignees[0].name}</CaptionMedium>
+                <CaptionLink onClick={handleAssignOpen}>{milestone.assignees[0] ? "Reassign" : "Assign"}</CaptionLink>
             </FlexColumn>
             <FlexRow style={{
                 gridColumn: "notifications",
@@ -92,6 +109,16 @@ export function MilestoneCard({ milestone, user, milestones, setMilestones }) {
                     }
                 }}/>
             </FlexRow>
+            <AssignMilestoneDialogue
+                assignments={assignments}
+                allUsers={allUsers} 
+                milestone={milestone}
+                setMilestones={setMilestones}
+                milestones={milestones}
+                open={openAssignDialogue}
+                handleClickOpen={handleAssignOpen}
+                handleClose={handleAssignClose}
+            />
             <EditMilestoneDialogue 
                 milestone={milestone}
                 setMilestones={setMilestones}

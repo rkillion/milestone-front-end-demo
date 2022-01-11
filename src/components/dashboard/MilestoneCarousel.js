@@ -10,7 +10,7 @@ export default function MilestoneCarousel({ milestones }) {
           naturalSlideWidth={4}
           naturalSlideHeight={1}
           totalSlides={milestones.length}
-          visibleSlides={2}
+          visibleSlides={3}
         //   hasMasterSpinner={true} use this if you end up having images
           isIntrinsicHeight={false}
           style={{

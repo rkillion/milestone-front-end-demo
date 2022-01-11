@@ -60,6 +60,19 @@ export const CaptionMedium = styled.span`
     color: ${themeColors.primaryAccessibleBlack}
 `
 
+export const CaptionLink = styled.span`
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+    color: ${themeColors.primaryDarkCyan};
+    &:hover {
+        color: ${themeColors.secondaryDarkCerulean};
+        transition: .5s
+    };
+`
+
 export const Typography = styled.span`
     font-family: Quicksand;
     font-style: normal;
@@ -112,6 +125,17 @@ export const InputLabel = styled.label`
 `
 
 export const InputField = styled.input`
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 120%;
+    border: ${tableStyles.border};
+    border-radius: 4px;
+    color: ${themeColors.primaryAccessibleBlack}
+`
+
+export const SelectField = styled.select`
     font-family: Quicksand;
     font-style: normal;
     font-weight: bold;
