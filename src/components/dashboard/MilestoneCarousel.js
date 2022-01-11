@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Badge from '@mui/material/Badge';
 import { CalendarDateDisplay, CaptionMedium, FlexRow, tableStyles, themeColors, Typography } from '../../styleExports';
 import { useEffect, useState } from 'react';
+import { style } from '@mui/system';
 
 export default function MilestoneCarousel({ milestones }) {
      //the width of the slides needs to get steadily larger/smaller as the screen expands, retracts, then jump when the slide number changes
@@ -116,23 +117,30 @@ export default function MilestoneCarousel({ milestones }) {
                 flexFlow: "row nowrap",
                 justifyContent: "space-between"
             }}>
-            <ButtonBack style={carouselButtonStyle("left")}><Typography style={buttonTypographyStyle}>{"<"}</Typography></ButtonBack>
-            <ButtonNext style={carouselButtonStyle("right")}><Typography style={buttonTypographyStyle}>{">"}</Typography></ButtonNext>
+            <ButtonBack style={carouselButtonStyle("left",clientWidth)}><Typography style={buttonTypographyStyle}>{"<"}</Typography></ButtonBack>
+            <ButtonNext style={carouselButtonStyle("right",clientWidth)}><Typography style={buttonTypographyStyle}>{">"}</Typography></ButtonNext>
             </div>
         </CarouselProvider>
     );
 }
 
-const carouselButtonStyle = (side) => {
-    return {
-    border: "0px",
-    background: null,
-    // shadow: null,
-    backgroundColor: "white",
-    zIndex: 2,
-    position: "relative",
-    left: side==="left" ? -40 : 0
-}}
+const carouselButtonStyle = (side,clientWidth) => {
+    let styleConfig = {
+        border: "0px",
+        background: null,
+        backgroundColor: "white",
+        zIndex: 2
+    }
+    if (clientWidth<660) {
+        styleConfig.position = "relative";
+        styleConfig.left = side==="left" ? -40 : 0;
+    } else {
+        styleConfig.position= "fixed";
+        styleConfig.top= 180;
+        styleConfig.left= side==="left" ? 295 : Math.min(1185-125,Math.max(660-125,clientWidth-125))
+    }
+    return styleConfig
+}
 
 const buttonTypographyStyle = {
     // color: themeColors.primaryLuckyPoint,
