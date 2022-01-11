@@ -34,7 +34,6 @@ export default function MilestoneCarousel({ milestones }) {
         slideNum = 1;
         slideWidth = 3.5;
     }
-    console.log(slideNum,breakWidth,slideWidth);
 
     function debounce(fn, ms) { //a function for clearing and applying a timer- used to reset the variable in state for the window size
         let timer
