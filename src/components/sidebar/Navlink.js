@@ -6,7 +6,9 @@ export default function Navlink({title,destination}) {
     const navigate = useNavigate();
 
     return (
-        <NavButton onClick={()=>navigate(destination)} style={{
+        <NavButton 
+        onClick={()=>navigate(destination)} 
+        style={{
             color: `${window.location.pathname===destination ? themeColors.primaryDarkCyan : "#FFFFFF"}`
         }}>
             <Typography>{title}</Typography>

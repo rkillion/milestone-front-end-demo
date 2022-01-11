@@ -7,12 +7,12 @@ import { CalendarDateDisplay, CaptionMedium, FlexRow, tableStyles, themeColors, 
 export default function MilestoneCarousel({ milestones }) {
     return (
         <CarouselProvider
-          naturalSlideWidth={3}
+          naturalSlideWidth={4}
           naturalSlideHeight={1}
           totalSlides={milestones.length}
-          visibleSlides={3}
+          visibleSlides={2}
         //   hasMasterSpinner={true} use this if you end up having images
-          isIntrinsicHeight={true}
+          isIntrinsicHeight={false}
           style={{
                 borderTop: tableStyles.border,
                 borderRight: tableStyles.border,
@@ -22,7 +22,7 @@ export default function MilestoneCarousel({ milestones }) {
           }}
         >
             <Slider style={{
-                
+                // width: "100%"
             }}>
                 {milestones.map((milestone,arrayIndex)=>{
                     return (
@@ -30,7 +30,9 @@ export default function MilestoneCarousel({ milestones }) {
                             key={milestone.id} 
                             index={arrayIndex}
                             style={{
+                                // width: "100%",
                                 display: "flex",
+                                flexFlow: "row nowrap",
                                 alignItems: "center",
                             }}
                         >

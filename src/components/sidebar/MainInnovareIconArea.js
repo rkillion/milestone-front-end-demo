@@ -6,7 +6,9 @@ export default function MainInnovareIconArea() {
     const navigate = useNavigate();
     
     return (
-        <MainInnovareIconAreaDiv onClick={()=>navigate("/")}>
+        <MainInnovareIconAreaDiv 
+        onClick={()=>navigate("/")}
+        >
             <InnovareIcon style={{padding: "10px"}}/>
         </MainInnovareIconAreaDiv>
     )

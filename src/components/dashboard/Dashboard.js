@@ -24,17 +24,21 @@ export default function Dashboard({ milestones, user, setMilestones }) {
                 style={{
                     display: "flex",
                     flexFlow: "row nowrap",
+                    justifyContent: "flex-start",
                     alignItems: "stretch"
                 }}
             >
                 <MilestonesCarouselLabel>
                     <SubheadingMedium>Milestones</SubheadingMedium>
                     <ParagraphMedium>
-                        <InternalLink onClick={()=>navigate("/milestones")}>View All</InternalLink>
+                        <InternalLink 
+                        onClick={()=>navigate("/milestones")}
+                        >View All</InternalLink>
                     </ParagraphMedium>
                 </MilestonesCarouselLabel>
                 {milestones.length<=0 ? <MilestonesCarouselLabel style={{
-                    // flexGrow: 2
+                    flexGrow: 2,
+                    // borderRight: "0px"
                     }}>
                     <Typography>You currently have no milestones.</Typography>
                     </MilestonesCarouselLabel> : <MilestoneCarousel milestones={milestones}/>}

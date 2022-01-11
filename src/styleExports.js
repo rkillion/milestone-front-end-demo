@@ -79,6 +79,8 @@ export const InternalLink = styled.span`
 //sections
 
 export const ContentPage = styled.div`
+    grid-area: content;
+    width: 100%;
 `
 
 export const PageSection = styled.div`

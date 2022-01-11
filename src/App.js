@@ -29,15 +29,13 @@ function App() {
     return null
   }
 
-  console.log(user);
-
   return (
     <AppDiv>
       <Banner user={user}/>
       <Sidebar />
       <Routes>
-        <Route exact path="/milestones" element={<MilestonesPage milestones={milestones} user={user} setMilestones={setMilestones}/>}/>
         <Route exact path="/" element={<Dashboard milestones={milestones} user={user} setMilestones={setMilestones}/>}/>
+        <Route exact path="/milestones" element={<MilestonesPage milestones={milestones} user={user} setMilestones={setMilestones}/>}/>
       </Routes>
     </AppDiv>
   );
